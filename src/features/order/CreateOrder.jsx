@@ -7,6 +7,7 @@ const isValidPhone = (str) =>
     str
   );
 
+//   P5LHT3, P4YG1Q
 const fakeCart = [
   {
     pizzaId: 12,
