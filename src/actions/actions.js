@@ -15,7 +15,7 @@ export async function createOrderAction({ request }) {
 
   if (!isValidPhone(order.pphone))
     errors.phone =
-      "Please enter your phone number. We need it to contact with you";
+      "Please enter a valid phone number. We need it to contact with you";
 
   if (Object.keys(errors).length > 0) return errors;
 
