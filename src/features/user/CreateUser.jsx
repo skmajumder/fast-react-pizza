@@ -3,9 +3,9 @@ import { useState } from 'react';
 function CreateUser() {
   const [username, setUsername] = useState('');
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
