@@ -1,5 +1,5 @@
 const Main = ({ children }) => {
-  return <main>{children}</main>;
+  return <main className="mx-auto max-w-3xl">{children}</main>;
 };
 
 export default Main;
