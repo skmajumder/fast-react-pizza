@@ -1,24 +1,24 @@
-import { Form, useActionData, useNavigation } from "react-router-dom";
+import { Form, useActionData, useNavigation } from 'react-router-dom';
 
 //   P5LHT3, P4YG1Q, C21H70
 const fakeCart = [
   {
     pizzaId: 12,
-    name: "Mediterranean",
+    name: 'Mediterranean',
     quantity: 2,
     unitPrice: 16,
     totalPrice: 32,
   },
   {
     pizzaId: 6,
-    name: "Vegetale",
+    name: 'Vegetale',
     quantity: 1,
     unitPrice: 13,
     totalPrice: 13,
   },
   {
     pizzaId: 11,
-    name: "Spinach and Mushroom",
+    name: 'Spinach and Mushroom',
     quantity: 1,
     unitPrice: 15,
     totalPrice: 15,
@@ -27,7 +27,7 @@ const fakeCart = [
 
 function CreateOrder() {
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
+  const isSubmitting = navigation.state === 'submitting';
   const formError = useActionData();
 
   // const [withPriority, setWithPriority] = useState(false);
@@ -72,8 +72,11 @@ function CreateOrder() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button disabled={isSubmitting}>
-            {isSubmitting ? "Placing Order..." : "Order now"}
+          <button
+            disabled={isSubmitting}
+            className="inline-block rounded-full bg-yellow-400 px-4 py-3 text-sm font-semibold uppercase tracking-wide text-stone-800 transition-colors delay-150 duration-300 ease-in-out hover:bg-yellow-300 focus:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? 'Placing Order...' : 'Order now'}
           </button>
         </div>
       </Form>
