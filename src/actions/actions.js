@@ -21,6 +21,6 @@ export async function createOrderAction({ request }) {
   // const newOrder = await createOrder(order);
 
   // return redirect(`/order/${newOrder.id}`);
-  console.log(order);
+  
   return null;
 }
