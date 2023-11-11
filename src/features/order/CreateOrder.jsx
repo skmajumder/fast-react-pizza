@@ -1,4 +1,5 @@
 import { Form, useActionData, useNavigation } from 'react-router-dom';
+import Button from '../../ui/Button';
 
 //   P5LHT3, P4YG1Q, C21H70
 const fakeCart = [
@@ -86,17 +87,16 @@ function CreateOrder() {
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor="priority">Want to yo give your order priority?</label>
+          <label htmlFor="priority" className="cursor-pointer">
+            Want to yo give your order priority?
+          </label>
         </div>
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button
-            disabled={isSubmitting}
-            className="inline-block rounded-full bg-yellow-400 px-4 py-3 text-sm font-semibold uppercase tracking-wide text-stone-800 transition-colors delay-150 duration-300 ease-in-out hover:bg-yellow-300 focus:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
-          >
+          <Button disabled={isSubmitting}>
             {isSubmitting ? 'Placing Order...' : 'Order now'}
-          </button>
+          </Button>
         </div>
       </Form>
     </div>
