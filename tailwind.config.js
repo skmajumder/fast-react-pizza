@@ -9,6 +9,9 @@ export default {
       height: {
         screen: '100dvh',
       },
+      fontSize: {
+        huge: ['80rem', { lineHeight: '1' }],
+      },
     },
   },
   plugins: [],
