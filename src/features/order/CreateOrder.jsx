@@ -1,5 +1,6 @@
 import { Form, useActionData, useNavigation } from 'react-router-dom';
 import Button from '../../ui/Button';
+import { useState } from 'react';
 
 //   P5LHT3, P4YG1Q, C21H70
 const fakeCart = [
@@ -31,63 +32,73 @@ function CreateOrder() {
   const isSubmitting = navigation.state === 'submitting';
   const formError = useActionData();
 
-  // const [withPriority, setWithPriority] = useState(false);
+  const [withPriority, setWithPriority] = useState(false);
   const cart = fakeCart;
 
   return (
-    <div>
-      <h2>Ready to order? Let&apos;s go!</h2>
+    <div className="px-4 py-6">
+      <h2 className="mb-8 text-xl font-semibold">
+        Ready to order? Let&apos;s go!
+      </h2>
 
       <Form method="POST">
-        <div>
-          <label htmlFor="customer">First Name</label>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="sm:basis-40" htmlFor="customer">
+            First Name
+          </label>
           <input
             type="text"
             name="customer"
-            className="input"
+            className="input grow"
             id="customer"
             required
           />
         </div>
 
-        <div>
-          <label htmlFor="phone">Phone number</label>
-          <div>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="sm:basis-40" htmlFor="phone">
+            Phone number
+          </label>
+          <div className="grow">
             <input
               type="tel"
               name="phone"
-              className="input"
+              className="input w-full"
               id="phone"
               required
             />
-          </div>
 
-          {formError?.phone && <p className="error">{formError.phone}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="address">Address</label>
-          <div>
-            <input
-              type="text"
-              name="address"
-              className="input"
-              id="address"
-              required
-            />
+            {formError?.phone && (
+              <p className="mt-2 rounded-full bg-red-100 p-2.5 text-xs text-red-700">
+                ❌ {formError.phone}
+              </p>
+            )}
           </div>
         </div>
 
-        <div>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="sm:basis-40" htmlFor="address">
+            Address
+          </label>
+          <input
+            type="text"
+            name="address"
+            className="input grow"
+            id="address"
+            required
+          />
+        </div>
+
+        <div className="mb-12 flex items-center gap-5">
           <input
             type="checkbox"
             name="priority"
             id="priority"
             className="checkbox"
-            // value={withPriority}
-            // onChange={(e) => setWithPriority(e.target.checked)}
+            value={withPriority}
+            onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor="priority" className="cursor-pointer">
+          <label htmlFor="priority" className="cursor-pointer font-medium">
             Want to yo give your order priority?
           </label>
         </div>
@@ -104,3 +115,4 @@ function CreateOrder() {
 }
 
 export default CreateOrder;
+ 

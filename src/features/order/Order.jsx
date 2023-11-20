@@ -1,50 +1,50 @@
 import {
-    calcMinutesLeft,
-    formatCurrency,
-    formatDate,
-} from "../../utilities/helpers";
-import {useLoaderData} from "react-router-dom";
+  calcMinutesLeft,
+  formatCurrency,
+  formatDate,
+} from '../../utilities/helpers';
+import { useLoaderData } from 'react-router-dom';
 
 // Test ID: IIDSAT
 function Order() {
-    const {
-        id,
-        status,
-        priority,
-        priorityPrice,
-        orderPrice,
-        estimatedDelivery,
-        cart
-    } = useLoaderData();
-    const deliveryIn = calcMinutesLeft(estimatedDelivery);
+  const {
+    id,
+    status,
+    priority,
+    priorityPrice,
+    orderPrice,
+    estimatedDelivery,
+    cart,
+  } = useLoaderData();
+  const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
-    return (
+  return (
+    <div>
+      <div>
+        <h2>Status</h2>
+
         <div>
-            <div>
-                <h2>Status</h2>
-
-                <div>
-                    {priority && <span>Priority</span>}
-                    <span>{status} order</span>
-                </div>
-            </div>
-
-            <div>
-                <p>
-                    {deliveryIn >= 0
-                        ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
-                        : "Order should have arrived"}
-                </p>
-                <p>(Estimated delivery: {formatDate(estimatedDelivery)})</p>
-            </div>
-
-            <div>
-                <p>Price pizza: {formatCurrency(orderPrice)}</p>
-                {priority && <p>Price priority: {formatCurrency(priorityPrice)}</p>}
-                <p>To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}</p>
-            </div>
+          {priority && <span>Priority</span>}
+          <span>{status} order</span>
         </div>
-    );
+      </div>
+
+      <div>
+        <p>
+          {deliveryIn >= 0
+            ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
+            : 'Order should have arrived'}
+        </p>
+        <p>(Estimated delivery: {formatDate(estimatedDelivery)})</p>
+      </div>
+
+      <div>
+        <p>Price pizza: {formatCurrency(orderPrice)}</p>
+        {priority && <p>Price priority: {formatCurrency(priorityPrice)}</p>}
+        <p>To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}</p>
+      </div>
+    </div>
+  );
 }
 
 export default Order;
