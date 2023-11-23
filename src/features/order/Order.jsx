@@ -4,6 +4,7 @@ import {
   formatDate,
 } from '../../utilities/helpers';
 import { useLoaderData } from 'react-router-dom';
+import OrderItem from './OrderItem';
 
 // Test ID: IIDSAT
 function Order() {
@@ -46,18 +47,22 @@ function Order() {
         </p>
       </div>
 
+      <ul className="divide-y divide-stone-200 border-b border-t">
+        {cart.map((item) => (
+          <OrderItem key={item.name} item={item} />
+        ))}
+      </ul>
+
       <div className="space-y-2 rounded-sm bg-stone-200 px-6 py-5">
         <p className="text-sm font-medium text-stone-600">
           Price pizza: {formatCurrency(orderPrice)}
         </p>
-
         {priority && (
           <p className="text-sm font-medium text-stone-600">
             Price priority: {formatCurrency(priorityPrice)}
           </p>
         )}
-
-        <p className="font-semibold">
+        <p className="font-bold">
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
