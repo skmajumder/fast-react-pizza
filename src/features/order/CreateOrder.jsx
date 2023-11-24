@@ -1,6 +1,7 @@
 import { Form, useActionData, useNavigation } from 'react-router-dom';
 import Button from '../../ui/Button';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 //   P5LHT3, P4YG1Q, C21H70
 const fakeCart = [
@@ -28,6 +29,8 @@ const fakeCart = [
 ];
 
 function CreateOrder() {
+  const username = useSelector((state) => state.user.userName);
+
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
   const formError = useActionData();
@@ -49,6 +52,7 @@ function CreateOrder() {
           <input
             type="text"
             name="customer"
+            defaultValue={username}
             className="input grow"
             id="customer"
             required
@@ -115,4 +119,3 @@ function CreateOrder() {
 }
 
 export default CreateOrder;
- 
