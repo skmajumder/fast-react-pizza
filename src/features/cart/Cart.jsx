@@ -2,34 +2,22 @@ import LinkButton from '../../ui/LinkButton';
 import Button from '../../ui/Button';
 import CartItem from './CartItem';
 import { useSelector } from 'react-redux';
-
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: 'Mediterranean',
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: 'Vegetale',
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: 'Spinach and Mushroom',
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
+import { getCart } from './cartSlice';
 
 function Cart() {
   const username = useSelector((state) => state.user.userName);
-  const cart = fakeCart;
+  const cart = useSelector(getCart);
+
+  if (cart.length === 0) {
+    return (
+      <div className="px-4 py-3">
+        <LinkButton to="/menu">&larr; Back to menu</LinkButton>
+        <p className="mt-7 font-semibold">
+          Your cart is still empty. Start adding some pizzas :)
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="px-4 py-3">
