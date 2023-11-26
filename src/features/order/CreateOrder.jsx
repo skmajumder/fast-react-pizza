@@ -1,10 +1,11 @@
 import { Form, useActionData, useNavigation } from 'react-router-dom';
 import Button from '../../ui/Button';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCart, getTotalCartPrice } from '../cart/cartSlice';
 import EmptyCart from '../cart/EmptyCart';
 import { formatCurrency } from '../../utilities/helpers';
+import { fetchAddress } from '../user/userSlice';
 
 //   P5LHT3, P4YG1Q, C21H70, 36B9X3, STKGBE
 function CreateOrder() {
@@ -12,6 +13,7 @@ function CreateOrder() {
   const username = useSelector((state) => state.user.userName);
   const cart = useSelector(getCart);
   const totalCartPrice = useSelector(getTotalCartPrice);
+  const dispatch = useDispatch();
 
   const piorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
   const totalPrice = totalCartPrice + piorityPrice;
@@ -27,6 +29,10 @@ function CreateOrder() {
       <h2 className="mb-8 text-xl font-semibold">
         Ready to order? Let&apos;s go!
       </h2>
+
+      <button onClick={() => dispatch(fetchAddress())}>
+        Get Current Location
+      </button>
 
       <Form method="POST">
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
