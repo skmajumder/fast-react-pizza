@@ -2,41 +2,21 @@ import { Form, useActionData, useNavigation } from 'react-router-dom';
 import Button from '../../ui/Button';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { getCart } from '../cart/cartSlice';
+import EmptyCart from '../cart/EmptyCart';
 
-//   P5LHT3, P4YG1Q, C21H70
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: 'Mediterranean',
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: 'Vegetale',
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: 'Spinach and Mushroom',
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
-
+//   P5LHT3, P4YG1Q, C21H70, 36B9X3
 function CreateOrder() {
   const username = useSelector((state) => state.user.userName);
+  const cart = useSelector(getCart);
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
   const formError = useActionData();
 
   const [withPriority, setWithPriority] = useState(false);
-  const cart = fakeCart;
+
+  if (!cart.length) return <EmptyCart />;
 
   return (
     <div className="px-4 py-6">
@@ -108,7 +88,12 @@ function CreateOrder() {
         </div>
 
         <div>
-          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+          <input
+            type="hidden"
+            className="hidden"
+            name="cart"
+            value={JSON.stringify(cart)}
+          />
           <Button type="primary" disabled={isSubmitting}>
             {isSubmitting ? 'Placing Order...' : 'Order now'}
           </Button>

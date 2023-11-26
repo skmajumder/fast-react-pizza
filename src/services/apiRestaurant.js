@@ -27,7 +27,7 @@ export async function createOrder(newOrder) {
       },
     });
 
-    if (!res.ok) throw Error();
+    if (!res.ok) throw new Error();
     const { data } = await res.json();
     return data;
   } catch {

@@ -15,12 +15,9 @@ export async function createOrderAction({ request }) {
   if (!isValidPhone(order.phone))
     errors.phone =
       'Please enter a valid phone number. We need it to contact with you';
-
   if (Object.keys(errors).length > 0) return errors;
 
-  // const newOrder = await createOrder(order);
+  const newOrder = await createOrder(order);
 
-  // return redirect(`/order/${newOrder.id}`);
-  
-  return null;
+  return redirect(`/order/${newOrder.id}`);
 }
