@@ -2,19 +2,23 @@ import { Form, useActionData, useNavigation } from 'react-router-dom';
 import Button from '../../ui/Button';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getCart } from '../cart/cartSlice';
+import { getCart, getTotalCartPrice } from '../cart/cartSlice';
 import EmptyCart from '../cart/EmptyCart';
+import { formatCurrency } from '../../utilities/helpers';
 
-//   P5LHT3, P4YG1Q, C21H70, 36B9X3
+//   P5LHT3, P4YG1Q, C21H70, 36B9X3, STKGBE
 function CreateOrder() {
+  const [withPriority, setWithPriority] = useState(false);
   const username = useSelector((state) => state.user.userName);
   const cart = useSelector(getCart);
+  const totalCartPrice = useSelector(getTotalCartPrice);
+
+  const piorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
+  const totalPrice = totalCartPrice + piorityPrice;
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
   const formError = useActionData();
-
-  const [withPriority, setWithPriority] = useState(false);
 
   if (!cart.length) return <EmptyCart />;
 
@@ -95,7 +99,9 @@ function CreateOrder() {
             value={JSON.stringify(cart)}
           />
           <Button type="primary" disabled={isSubmitting}>
-            {isSubmitting ? 'Placing Order...' : 'Order now'}
+            {isSubmitting
+              ? 'Placing Order...'
+              : `Order now from ${formatCurrency(totalPrice)}`}
           </Button>
         </div>
       </Form>
