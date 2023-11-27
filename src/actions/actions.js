@@ -13,14 +13,18 @@ export async function createOrderAction({ request }) {
     priority: data.priority === 'true',
   };
 
+  console.log(order);
+
   const errors = {};
   if (!isValidPhone(order.phone))
     errors.phone =
       'Please enter a valid phone number. We need it to contact with you';
   if (Object.keys(errors).length > 0) return errors;
 
-  const newOrder = await createOrder(order);
-  store.dispatch(clearCart());
+  // const newOrder = await createOrder(order);
+  // store.dispatch(clearCart());
 
-  return redirect(`/order/${newOrder.id}`);
+  // return redirect(`/order/${newOrder.id}`);
+
+  return null;
 }
