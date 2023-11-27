@@ -1,10 +1,11 @@
+import { useLoaderData, useFetcher } from 'react-router-dom';
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
 } from '../../utilities/helpers';
-import { useLoaderData } from 'react-router-dom';
 import OrderItem from './OrderItem';
+import { useEffect } from 'react';
 
 // Test ID: IIDSAT
 function Order() {
@@ -17,6 +18,12 @@ function Order() {
     estimatedDelivery,
     cart,
   } = useLoaderData();
+  const fetcher = useFetcher();
+
+  useEffect(() => {
+    if (!fetcher.data && fetcher.state === 'idle') fetcher.load('/menu');
+  }, [fetcher]);
+
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
@@ -39,7 +46,7 @@ function Order() {
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-sm bg-stone-200 px-6 py-5">
         <p className="font-medium">
           {deliveryIn >= 0
-            ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
+            ? `Only ${deliveryIn} minutes left 😃`
             : 'Order should have arrived'}
         </p>
         <p className="text-xs text-stone-500">
@@ -49,7 +56,14 @@ function Order() {
 
       <ul className="divide-y divide-stone-200 border-b border-t">
         {cart.map((item) => (
-          <OrderItem key={item.name} item={item} />
+          <OrderItem
+            key={item.name}
+            item={item}
+            isLoadingIngredients={fetcher.state === 'loading'}
+            ingredients={
+              fetcher?.data?.find((menu) => menu.id === item.pizzaId)?.ingredients ?? []
+            }
+          />
         ))}
       </ul>
 
