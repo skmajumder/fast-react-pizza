@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { menuLoader, orderLoader } from '../loaders/loaderFunction';
-import { createOrderAction } from '../actions/actions';
+import { createOrderAction, updateOrderPriority } from '../actions/actions';
 
 import Home from '../ui/Home';
 import Error from '../ui/Error';
@@ -40,6 +40,7 @@ const router = createBrowserRouter([
         element: <Order />,
         loader: orderLoader,
         errorElement: <Error />,
+        action: updateOrderPriority,
       },
     ],
   },

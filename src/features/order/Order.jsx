@@ -6,9 +6,11 @@ import {
 } from '../../utilities/helpers';
 import OrderItem from './OrderItem';
 import { useEffect } from 'react';
+import UpdateOrder from './UpdateOrder';
 
-// Test ID: IIDSAT
+// Test ID: IIDSAT, C21H70, PYGKNA
 function Order() {
+  const order = useLoaderData();
   const {
     id,
     status,
@@ -17,7 +19,7 @@ function Order() {
     orderPrice,
     estimatedDelivery,
     cart,
-  } = useLoaderData();
+  } = order;
   const fetcher = useFetcher();
 
   useEffect(() => {
@@ -25,7 +27,7 @@ function Order() {
   }, [fetcher]);
 
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
-
+  
   return (
     <div className="space-y-8 px-4 py-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -61,7 +63,8 @@ function Order() {
             item={item}
             isLoadingIngredients={fetcher.state === 'loading'}
             ingredients={
-              fetcher?.data?.find((menu) => menu.id === item.pizzaId)?.ingredients ?? []
+              fetcher?.data?.find((menu) => menu.id === item.pizzaId)
+                ?.ingredients ?? []
             }
           />
         ))}
@@ -80,6 +83,8 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+
+      {!priority && status === 'preparing' && <UpdateOrder order={order} />}
     </div>
   );
 }
