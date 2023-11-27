@@ -10,7 +10,12 @@ import { fetchAddress } from '../user/userSlice';
 //   P5LHT3, P4YG1Q, C21H70, 36B9X3, STKGBE
 function CreateOrder() {
   const [withPriority, setWithPriority] = useState(false);
-  const username = useSelector((state) => state.user.userName);
+  const {
+    userName,
+    status: addressStatus,
+    address,
+    position,
+  } = useSelector((state) => state.user);
   const cart = useSelector(getCart);
   const totalCartPrice = useSelector(getTotalCartPrice);
   const dispatch = useDispatch();
@@ -19,8 +24,15 @@ function CreateOrder() {
   const totalPrice = totalCartPrice + piorityPrice;
 
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
   const formError = useActionData();
+
+  const isSubmitting = navigation.state === 'submitting';
+  const isLoadingAddress = addressStatus === 'loading';
+
+  const handleFetchAddress = (e) => {
+    e.preventDefault();
+    dispatch(fetchAddress());
+  };
 
   if (!cart.length) return <EmptyCart />;
 
@@ -30,10 +42,6 @@ function CreateOrder() {
         Ready to order? Let&apos;s go!
       </h2>
 
-      <button onClick={() => dispatch(fetchAddress())}>
-        Get Current Location
-      </button>
-
       <Form method="POST">
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40" htmlFor="customer">
@@ -42,7 +50,7 @@ function CreateOrder() {
           <input
             type="text"
             name="customer"
-            defaultValue={username}
+            defaultValue={userName}
             className="input grow"
             id="customer"
             required
@@ -70,7 +78,7 @@ function CreateOrder() {
           </div>
         </div>
 
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="relative mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40" htmlFor="address">
             Address
           </label>
@@ -79,8 +87,19 @@ function CreateOrder() {
             name="address"
             className="input grow"
             id="address"
+            disabled={isLoadingAddress}
+            defaultValue={address}
             required
           />
+          <span className="absolute right-1 z-10">
+            <Button
+              type="small"
+              disabled={isLoadingAddress}
+              onClick={handleFetchAddress}
+            >
+              Get Location
+            </Button>
+          </span>
         </div>
 
         <div className="mb-12 flex items-center gap-5">
